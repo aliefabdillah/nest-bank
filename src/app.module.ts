@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './module/users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Users } from './module/users/entities/users.entity';
+import { AccountsModule } from './module/accounts/accounts.module';
+import { Accounts } from './module/accounts/entities/accounts.entity';
 
 @Module({
   imports: [
@@ -16,11 +18,12 @@ import { Users } from './module/users/entities/users.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      models: [Users],
+      models: [Users, Accounts],
       autoLoadModels: true,
       synchronize: true,
     }),
     UsersModule,
+    AccountsModule,
   ],
   controllers: [],
   providers: [],

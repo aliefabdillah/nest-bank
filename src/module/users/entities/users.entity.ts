@@ -3,11 +3,13 @@ import {
   CreatedAt,
   DataType,
   Default,
+  HasOne,
   Model,
   PrimaryKey,
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
+import { Accounts } from 'src/module/accounts/entities/accounts.entity';
 
 @Table({
   timestamps: true,
@@ -37,6 +39,9 @@ export class Users extends Model {
 
   @UpdatedAt
   updatedAt: Date;
+
+  @HasOne(() => Accounts)
+  account: Accounts;
 }
 
 /* CREATE TABLE users (
