@@ -1,5 +1,6 @@
 import {
   BelongsTo,
+  BelongsToMany,
   Column,
   CreatedAt,
   DataType,
@@ -12,6 +13,8 @@ import {
   UpdatedAt,
 } from 'sequelize-typescript';
 import { AccountType } from 'src/enums/AccountType.enum';
+import { Transactions } from 'src/module/transactions/entities/transactions.entity';
+import { TransactionAccounts } from 'src/module/transactions/entities/transactionsAccounts.entity';
 import { Users } from 'src/module/users/entities/users.entity';
 
 @Table({
@@ -50,6 +53,9 @@ export class Accounts extends Model {
 
   @BelongsTo(() => Users)
   user: Users;
+
+  @BelongsToMany(() => Transactions, () => TransactionAccounts)
+  transactions: Transactions[];
 }
 
 /* CREATE TABLE accounts (
