@@ -9,6 +9,7 @@ import { TransactionsModule } from './module/transactions/transactions.module';
 import { Transactions } from './module/transactions/entities/transactions.entity';
 import { TransactionAccounts } from './module/transactions/entities/transactionsAccounts.entity';
 import { LogsModule } from './module/logs/logs.module';
+import { Logs } from './module/logs/entities/logs.entity';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { LogsModule } from './module/logs/logs.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      models: [Users, Accounts, Transactions, TransactionAccounts],
+      models: [Users, Accounts, Transactions, TransactionAccounts, Logs],
       autoLoadModels: true,
       synchronize: true,
       sync: {

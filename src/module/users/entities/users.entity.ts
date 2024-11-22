@@ -10,6 +10,7 @@ import {
   UpdatedAt,
 } from 'sequelize-typescript';
 import { Accounts } from 'src/module/accounts/entities/accounts.entity';
+import { Logs } from 'src/module/logs/entities/logs.entity';
 
 @Table({
   timestamps: true,
@@ -42,6 +43,9 @@ export class Users extends Model {
 
   @HasOne(() => Accounts)
   account: Accounts;
+
+  @HasOne(() => Logs)
+  log: Logs;
 }
 
 /* CREATE TABLE users (
