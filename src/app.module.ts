@@ -8,6 +8,7 @@ import { Accounts } from './module/accounts/entities/accounts.entity';
 import { TransactionsModule } from './module/transactions/transactions.module';
 import { Transactions } from './module/transactions/entities/transactions.entity';
 import { TransactionAccounts } from './module/transactions/entities/transactionsAccounts.entity';
+import { LogsModule } from './module/logs/logs.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { TransactionAccounts } from './module/transactions/entities/transactions
     UsersModule,
     AccountsModule,
     TransactionsModule,
+    LogsModule,
   ],
   controllers: [],
   providers: [],
