@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { BaseAbstractRepository } from './base.abstract.repository';
+import { BaseAbstractRepository } from './bases/base.abstract.repository';
 import { Users } from 'src/module/users/entities/users.entity';
-import { BaseInterfaceRepository } from './base.interface.repository';
+import { BaseInterfaceRepository } from './bases/base.interface.repository';
 import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()

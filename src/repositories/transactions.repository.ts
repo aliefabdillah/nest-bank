@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { BaseAbstractRepository } from './base.abstract.repository';
-import { BaseInterfaceRepository } from './base.interface.repository';
+import { BaseAbstractRepository } from './bases/base.abstract.repository';
+import { BaseInterfaceRepository } from './bases/base.interface.repository';
 import { InjectModel } from '@nestjs/sequelize';
 import { Transactions } from 'src/module/transactions/entities/transactions.entity';
 
