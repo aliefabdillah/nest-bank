@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  BadRequestException,
   ConflictException,
   HttpStatus,
   Injectable,
@@ -106,6 +107,32 @@ export class UsersService implements UsersServiceInterface {
     id: string,
     updateDto: UpdateUserDto,
   ): Promise<Response<Users>> {
-    throw new Error('Method not implemented.');
+    const updatedData = await this.usersRepository.update(updateDto, {
+      where: { id },
+    });
+
+    if (updatedData) {
+      const user = await this.usersRepository.findOne({
+        where: {
+          id,
+        },
+        attributes: [
+          'id',
+          'full_name',
+          'email',
+          'phone',
+          'createdAt',
+          'updatedAt',
+        ],
+      });
+
+      return {
+        status: HttpStatus.OK,
+        message: 'Successfully update profile',
+        data: user,
+      };
+    }
+
+    throw new BadRequestException('Failed update profile');
   }
 }
