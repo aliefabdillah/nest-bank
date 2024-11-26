@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Inject,
+  Patch,
   Post,
   Req,
   UseGuards,
@@ -11,6 +12,7 @@ import { UsersServiceInterface } from './interface/user.service.interface';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Controller('users')
 export class UsersController {
@@ -33,5 +35,11 @@ export class UsersController {
   @Get('profile')
   async getProfile(@Req() req: any) {
     return this.usersService.getProfile(req.user.id);
+  }
+
+  @UseGuards(AuthGuard())
+  @Patch('profile')
+  async updateProfile(@Req() req: any, @Body() updateDto: UpdateUserDto) {
+    return this.usersService.updateProfile(req.user.id, updateDto);
   }
 }
