@@ -19,11 +19,8 @@ export abstract class BaseAbstractRepository<T extends Model>
     return this.model.findByPk(id);
   }
 
-  public async update(id: string, data: T | any): Promise<[number, T[]]> {
-    return this.model.update(data, {
-      where: { id } as unknown as WhereOptions<Attributes<T>>,
-      returning: true,
-    });
+  public async update(data: T | any, condition: any): Promise<[number, T[]]> {
+    return this.model.update(data, condition);
   }
 
   public async delete(id: string): Promise<number> {
