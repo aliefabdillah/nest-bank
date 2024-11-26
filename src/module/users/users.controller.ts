@@ -1,7 +1,16 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersServiceInterface } from './interface/user.service.interface';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UsersController {
@@ -17,7 +26,12 @@ export class UsersController {
 
   @Post('login')
   async login(@Body() loginDto: LoginUserDto) {
-    console.log(process.env.JWT_SECRET);
     return this.usersService.login(loginDto);
+  }
+
+  @UseGuards(AuthGuard())
+  @Get('profile')
+  async getProfile(@Req() req: any) {
+    return this.usersService.getProfile(req.user.id);
   }
 }
