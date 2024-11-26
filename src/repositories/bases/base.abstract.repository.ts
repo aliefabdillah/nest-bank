@@ -38,7 +38,11 @@ export abstract class BaseAbstractRepository<T extends Model>
     });
   }
 
-  public async find(conditions: any): Promise<T[]> {
+  public async find(conditions?: any): Promise<T[]> {
     return this.model.findAll(conditions);
+  }
+
+  public async findOne(conditions?: any): Promise<T> {
+    return this.model.findOne(conditions);
   }
 }
