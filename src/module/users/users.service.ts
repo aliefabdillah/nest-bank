@@ -46,6 +46,17 @@ export class UsersService implements UsersServiceInterface {
     };
   }
 
+  async validateUser(email: string, password: string): Promise<Users | null> {
+    const user = await this.usersRepository.findOne({ where: { email } });
+
+    if (user && bcrypt.compare(user.password_hash, password)) {
+      const { password_hash, ...result } = user;
+      return result as Users;
+    }
+
+    return null;
+  }
+
   async login(userDto: LoginUserDto): Promise<string> {
     throw new Error('Method not implemented.');
   }
