@@ -9,5 +9,4 @@ export interface UsersServiceInterface {
   login(userDto: LoginUserDto): Promise<any>;
   getProfile(id: string): Promise<Response<Users>>;
   updateProfile(id: string, updateDto: UpdateUserDto): Promise<Response<Users>>;
-  validateUser(email: string, password: string): Promise<Users | null>;
 }
