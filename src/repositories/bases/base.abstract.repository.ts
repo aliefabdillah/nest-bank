@@ -37,4 +37,8 @@ export abstract class BaseAbstractRepository<T extends Model>
       include: relation,
     });
   }
+
+  public async find(conditions: any): Promise<T[]> {
+    return this.model.findAll(conditions);
+  }
 }
