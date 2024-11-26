@@ -3,6 +3,7 @@ import {
   ConflictException,
   HttpStatus,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { UsersServiceInterface } from './interface/user.service.interface';
@@ -76,7 +77,29 @@ export class UsersService implements UsersServiceInterface {
   }
 
   async getProfile(id: string): Promise<Response<Users>> {
-    throw new Error('Method not implemented.');
+    const user = await this.usersRepository.findOne({
+      where: {
+        id,
+      },
+      attributes: [
+        'id',
+        'full_name',
+        'email',
+        'phone',
+        'createdAt',
+        'updatedAt',
+      ],
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return {
+      status: HttpStatus.OK,
+      message: 'Get user profile successfully',
+      data: user,
+    };
   }
 
   async updateProfile(
