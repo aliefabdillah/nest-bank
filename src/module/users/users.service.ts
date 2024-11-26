@@ -27,11 +27,22 @@ export class UsersService implements UsersServiceInterface {
     };
 
     const createdUser = await this.usersRepository.create(user);
+    const dataUser = await this.usersRepository.findOne({
+      where: { id: createdUser.id },
+      attributes: [
+        'id',
+        'full_name',
+        'email',
+        'phone',
+        'createdAt',
+        'updatedAt',
+      ],
+    });
 
     return {
       status: HttpStatus.CREATED,
       message: 'User successfully created',
-      data: createdUser,
+      data: dataUser,
     };
   }
 
