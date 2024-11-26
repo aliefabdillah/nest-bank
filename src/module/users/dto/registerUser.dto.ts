@@ -1,5 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { Min } from 'sequelize-typescript';
+import { IsEmail, IsNotEmpty, IsString, Min } from 'class-validator';
 
 export class RegisterUserDto {
   @IsString()
