@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ConflictException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UsersServiceInterface } from './interface/user.service.interface';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { RegisterUserDto } from './dto/registerUser.dto';
@@ -8,10 +13,14 @@ import { Users } from './entities/users.entity';
 import { UsersRepository } from 'src/repositories/users.repository';
 import * as bcrypt from 'bcryptjs';
 import { Response } from 'src/Response/response';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService implements UsersServiceInterface {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly jwtService: JwtService,
+  ) {}
   async register(userDto: RegisterUserDto): Promise<Response<Users>> {
     const existingUser = await this.usersRepository.findOne({
       where: { email: userDto.email },
@@ -57,8 +66,24 @@ export class UsersService implements UsersServiceInterface {
     return null;
   }
 
-  async login(userDto: LoginUserDto): Promise<string> {
-    throw new Error('Method not implemented.');
+  async login(userDto: LoginUserDto): Promise<any> {
+    const user = await this.usersRepository.findOne({
+      where: { email: userDto.email },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid Email');
+    }
+
+    if (!(await bcrypt.compare(userDto.password, user.password_hash))) {
+      throw new UnauthorizedException('Invalid Password');
+    }
+
+    const token = await this.jwtService.sign({
+      sub: user.id,
+    });
+
+    return { access_token: token };
   }
 
   async getProfile(id: string): Promise<Response<Users>> {
