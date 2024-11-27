@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -35,5 +36,11 @@ export class AccountsController {
   @Get('/:accountId')
   async getAccountsById(@Param() param: any) {
     return this.accountsService.getAccountById(param.accountId);
+  }
+
+  @UseGuards(AuthGuard())
+  @Delete('/:accountId')
+  async deleteAccount(@Param() param: any) {
+    return this.accountsService.deleteAccount(param.accountId);
   }
 }
