@@ -16,6 +16,14 @@ export class AccountsService implements AccountsServiceInterface {
     accountDto: CreateAccountDto,
     id: string,
   ): Promise<Response<Accounts>> {
+    const countAccount = await this.accountsRepository.find({
+      where: { user_id: id },
+    });
+
+    if (!(countAccount.length < 3)) {
+      throw new BadRequestException('Maximum account created');
+    }
+
     const account_number =
       '6078' +
       (new Date().getMonth() + 1) +
