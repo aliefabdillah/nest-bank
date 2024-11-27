@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Inject,
+  Param,
   Post,
   Req,
   UseGuards,
@@ -28,5 +29,11 @@ export class AccountsController {
   @Get()
   async getAccounts(@Req() req: any) {
     return this.accountsService.getAccounts(req.user.id);
+  }
+
+  @UseGuards(AuthGuard())
+  @Get('/:accountId')
+  async getAccountsById(@Param() param: any) {
+    return this.accountsService.getAccountById(param.accountId);
   }
 }
