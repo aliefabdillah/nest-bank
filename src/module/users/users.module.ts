@@ -23,7 +23,7 @@ import { ConfigService } from '@nestjs/config';
       },
     }),
   ],
-  exports: [SequelizeModule],
+  exports: [SequelizeModule, JwtStrategy, PassportModule],
   providers: [
     UsersRepository,
     {
