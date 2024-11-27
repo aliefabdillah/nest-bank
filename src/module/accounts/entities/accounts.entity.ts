@@ -6,6 +6,7 @@ import {
   DataType,
   Default,
   ForeignKey,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
@@ -56,6 +57,9 @@ export class Accounts extends Model {
 
   @BelongsToMany(() => Transactions, () => TransactionAccounts)
   transactions: Transactions[];
+
+  @HasMany(() => TransactionAccounts)
+  transactionsAccounts: TransactionAccounts[];
 }
 
 /* CREATE TABLE accounts (

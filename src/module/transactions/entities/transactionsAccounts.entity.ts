@@ -1,4 +1,10 @@
-import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsTo,
+  Column,
+  ForeignKey,
+  Model,
+  Table,
+} from 'sequelize-typescript';
 import { Accounts } from 'src/module/accounts/entities/accounts.entity';
 import { Transactions } from './transactions.entity';
 
@@ -18,4 +24,16 @@ export class TransactionAccounts extends Model {
   @ForeignKey(() => Transactions)
   @Column
   transactionsId: string;
+
+  @BelongsTo(() => Accounts, {
+    as: 'accountFrom',
+    foreignKey: 'account_fromId',
+  })
+  accountFrom: Accounts;
+
+  @BelongsTo(() => Accounts, { as: 'accountTo', foreignKey: 'account_toId' })
+  accountTo: Accounts;
+
+  @BelongsTo(() => Transactions)
+  transaction: Transactions;
 }

@@ -4,6 +4,7 @@ import {
   CreatedAt,
   DataType,
   Default,
+  HasOne,
   Model,
   PrimaryKey,
   Table,
@@ -22,10 +23,8 @@ export class Transactions extends Model {
   @Column
   id: string;
 
-  @Column({
-    type: DataType.BIGINT,
-  })
-  amout: number;
+  @Column
+  amount: number;
 
   @Column
   transactions_type: TransactionType;
@@ -39,6 +38,9 @@ export class Transactions extends Model {
 
   @BelongsToMany(() => Accounts, () => TransactionAccounts)
   accounts: Accounts[];
+
+  @HasOne(() => TransactionAccounts)
+  transactionsAccounts: TransactionAccounts[];
 }
 
 /* CREATE TABLE transactions (
