@@ -86,4 +86,18 @@ export class AccountsService implements AccountsServiceInterface {
       data: accountsData,
     };
   }
+
+  async deleteAccount(id: string): Promise<Response<Accounts>> {
+    const deletedAccount = await this.accountsRepository.delete(id);
+
+    if (!deletedAccount) {
+      throw new BadRequestException('Failed to Deleted Account');
+    }
+
+    return {
+      status: HttpStatus.OK,
+      message: 'Delete account Successfull',
+      data: {} as Accounts,
+    };
+  }
 }
