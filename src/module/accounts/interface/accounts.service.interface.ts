@@ -4,6 +4,6 @@ import { Response } from 'src/Response/response';
 
 export interface AccountsServiceInterface {
   create(accountDto: CreateAccountDto, id: string): Promise<Response<Accounts>>;
-  getAccounts(): Promise<Response<Accounts>>;
+  getAccounts(id: string): Promise<Response<Accounts[]>>;
   getAccountById(id: string): Promise<Response<Accounts>>;
 }
