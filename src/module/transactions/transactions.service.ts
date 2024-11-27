@@ -125,7 +125,36 @@ export class TransactionsService implements TransactionServiceInterface {
     };
   }
 
-  getById(id: string): Promise<Response<Transactions>> {
-    throw new Error('Method not implemented.');
+  async getById(id: string): Promise<Response<Transactions>> {
+    const transactionData = await this.transactionRepository.findOne({
+      where: { id },
+      attributes: ['id', 'amount', 'transactions_type', 'status'],
+      include: [
+        {
+          model: TransactionAccounts,
+          attributes: ['account_fromId', 'account_toId'],
+          include: [
+            {
+              model: Accounts,
+              attributes: ['account_number', 'account_type', 'user_id'],
+              as: 'accountFrom',
+              include: [{ model: Users, attributes: ['full_name'] }],
+            },
+            {
+              model: Accounts,
+              attributes: ['account_number', 'account_type', 'user_id'],
+              as: 'accountTo',
+              include: [{ model: Users, attributes: ['full_name'] }],
+            },
+          ],
+        },
+      ],
+    });
+
+    return {
+      status: HttpStatus.OK,
+      message: 'Get Transaction List successfuly',
+      data: transactionData,
+    };
   }
 }
