@@ -13,6 +13,9 @@ import { Transactions } from './entities/transactions.entity';
 import { TransactionsRepository } from 'src/repositories/transactions.repository';
 import { AccountsRepository } from 'src/repositories/accounts.repository';
 import { TransactionAccounts } from './entities/transactionsAccounts.entity';
+import { Op } from 'sequelize';
+import { Accounts } from '../accounts/entities/accounts.entity';
+import { Users } from '../users/entities/users.entity';
 
 @Injectable()
 export class TransactionsService implements TransactionServiceInterface {
@@ -67,8 +70,55 @@ export class TransactionsService implements TransactionServiceInterface {
     }
   }
 
-  getAll(query: any): Promise<Response<Transactions[]>> {
-    throw new Error('Method not implemented.');
+  async getAll(
+    accountId: string,
+    query: any,
+  ): Promise<Response<Transactions[]>> {
+    const transactionData = await this.transactionRepository.find({
+      attributes: ['amount', 'transactions_type', 'status'],
+      include: [
+        {
+          model: TransactionAccounts,
+          attributes: ['account_fromId', 'account_toId'],
+          where: {
+            [Op.or]: [
+              { account_fromId: accountId },
+              { account_toId: accountId },
+            ],
+          },
+          include: [
+            {
+              model: Accounts,
+              attributes: [
+                'account_number',
+                'account_type',
+                'balance',
+                'user_id',
+              ],
+              as: 'accountFrom',
+              include: [{ model: Users, attributes: ['full_name'] }],
+            },
+            {
+              model: Accounts,
+              attributes: [
+                'account_number',
+                'account_type',
+                'balance',
+                'user_id',
+              ],
+              as: 'accountTo',
+              include: [{ model: Users, attributes: ['full_name'] }],
+            },
+          ],
+        },
+      ],
+    });
+
+    return {
+      status: HttpStatus.OK,
+      message: 'Get Transaction List successfuly',
+      data: transactionData,
+    };
   }
 
   getById(id: string): Promise<Response<Transactions>> {
