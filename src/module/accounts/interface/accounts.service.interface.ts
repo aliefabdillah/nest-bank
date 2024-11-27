@@ -3,7 +3,7 @@ import { Accounts } from '../entities/accounts.entity';
 import { Response } from 'src/Response/response';
 
 export interface AccountsServiceInterface {
-  create(accountDto: CreateAccountDto): Promise<Response<Accounts>>;
+  create(accountDto: CreateAccountDto, id: string): Promise<Response<Accounts>>;
   getAccounts(): Promise<Response<Accounts>>;
   getAccountById(id: string): Promise<Response<Accounts>>;
 }
