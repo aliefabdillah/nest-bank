@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { AccountsRepository } from 'src/repositories/accounts.repository';
 import { AccountsServiceInterface } from './interface/accounts.service.interface';
 import { Response } from 'src/Response/response';
@@ -68,7 +73,17 @@ export class AccountsService implements AccountsServiceInterface {
     };
   }
 
-  getAccountById(id: string): Promise<Response<Accounts>> {
-    throw new Error('Method not implemented.');
+  async getAccountById(id: string): Promise<Response<Accounts>> {
+    const accountsData = await this.accountsRepository.findById(id);
+
+    if (!accountsData) {
+      throw new NotFoundException('Accounts not found');
+    }
+
+    return {
+      status: HttpStatus.OK,
+      message: 'Get accounts success',
+      data: accountsData,
+    };
   }
 }
