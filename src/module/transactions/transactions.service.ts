@@ -79,7 +79,7 @@ export class TransactionsService implements TransactionServiceInterface {
     query: any,
   ): Promise<Response<Transactions[]>> {
     const transactionData = await this.transactionRepository.find({
-      attributes: ['amount', 'transactions_type', 'status'],
+      attributes: ['id', 'amount', 'transactions_type', 'status'],
       include: [
         {
           model: TransactionAccounts,
