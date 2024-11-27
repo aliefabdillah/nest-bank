@@ -9,7 +9,7 @@ import { TransactionsController } from './transactions.controller';
   imports: [SequelizeModule.forFeature([Transactions])],
   providers: [
     TransactionsRepository,
-    { provide: 'TransactionServiceInterface', useClass: TransactionsService },
+    { provide: 'TransactionsServiceInterface', useClass: TransactionsService },
   ],
   controllers: [TransactionsController],
 })
