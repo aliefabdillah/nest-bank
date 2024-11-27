@@ -30,4 +30,10 @@ export class TransactionsController {
   async getAllTransaction(@Param() param: any, @Query() query: any) {
     return this.transactionService.getAll(param.accountId, query);
   }
+
+  @UseGuards(AuthGuard())
+  @Get('/details/:id')
+  async getDetailTransaction(@Param() param: any) {
+    return this.transactionService.getById(param.id);
+  }
 }
