@@ -13,5 +13,6 @@ import { UsersModule } from '../users/users.module';
     { provide: 'AccountsServiceInterface', useClass: AccountsService },
   ],
   controllers: [AccountsController],
+  exports: [AccountsRepository],
 })
 export class AccountsModule {}
