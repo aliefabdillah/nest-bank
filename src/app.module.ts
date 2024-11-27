@@ -24,11 +24,11 @@ import { Logs } from './module/logs/entities/logs.entity';
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
       models: [Users, Accounts, Transactions, TransactionAccounts, Logs],
-      autoLoadModels: true,
+      /* autoLoadModels: true,
       synchronize: true,
       sync: {
         alter: true,
-      },
+      }, */
     }),
     UsersModule,
     AccountsModule,
