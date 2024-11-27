@@ -6,4 +6,5 @@ export interface AccountsServiceInterface {
   create(accountDto: CreateAccountDto, id: string): Promise<Response<Accounts>>;
   getAccounts(id: string): Promise<Response<Accounts[]>>;
   getAccountById(id: string): Promise<Response<Accounts>>;
+  deleteAccount(id: string): Promise<Response<Accounts>>;
 }
