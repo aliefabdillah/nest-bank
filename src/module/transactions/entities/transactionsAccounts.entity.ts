@@ -9,13 +9,13 @@ import { Transactions } from './transactions.entity';
 export class TransactionAccounts extends Model {
   @ForeignKey(() => Accounts)
   @Column
-  accountId: string;
+  account_fromId: string;
+
+  @ForeignKey(() => Accounts)
+  @Column
+  account_toId: string;
 
   @ForeignKey(() => Transactions)
   @Column
-  transactions_fromId: string;
-
-  @ForeignKey(() => Transactions)
-  @Column
-  transactions_toId: string;
+  transactionsId: string;
 }
