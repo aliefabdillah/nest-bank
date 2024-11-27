@@ -16,6 +16,7 @@ import { TransactionAccounts } from './entities/transactionsAccounts.entity';
 import { Op } from 'sequelize';
 import { Accounts } from '../accounts/entities/accounts.entity';
 import { Users } from '../users/entities/users.entity';
+import { Status } from 'src/enums/status.enum';
 
 @Injectable()
 export class TransactionsService implements TransactionServiceInterface {
@@ -40,7 +41,7 @@ export class TransactionsService implements TransactionServiceInterface {
       }
 
       const transactionData = await this.transactionRepository.create({
-        amout: amount,
+        amount,
         transactions_type,
       });
 
@@ -59,6 +60,9 @@ export class TransactionsService implements TransactionServiceInterface {
         account_toId: account_to,
         transactionsId: transactionData.id,
       });
+
+      transactionData.status = Status.Completed;
+      transactionData.save();
 
       return {
         status: HttpStatus.OK,
